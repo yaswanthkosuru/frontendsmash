@@ -86,13 +86,12 @@ build:
 
 publish:
     stage: publish
-    variables:
-        NPM_TOKEN: ${CI_JOB_TOKEN}
-
+    # variables:
+    #     NPM_TOKEN: ${CI_JOB_TOKEN}
     script:
-        - echo "@smashbot:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/" > .npmrc
-        - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+        - echo "@smashbot://registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
         - npx semantic-release --debug
+        - npm publish
         - echo "-- publish completed succesfully"
     rules:
       - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
