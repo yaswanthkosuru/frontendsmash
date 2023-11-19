@@ -1,0 +1,70 @@
+{
+  "name": "smash-bot-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist/*",
+    "src/*",
+    "types/*"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint --fix 'src/**/*.{jsx,ts,tsx}'",
+    "format": "prettier --write src//**/*.{ts,tsx,css} --config ./.prettierrc",
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "semantic-release": "semantic-release"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "framer-motion": "^10.16.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vite-plugin-istanbul": "^5.0.0",
+    "vite-plugin-linter": "^2.0.7",
+    "vite-tsconfig-paths": "^4.2.1"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/node": "^20.9.2",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "eslint": "^8.54.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "husky": "^8.0.3",
+    "prettier": "^3.1.0",
+    "react-hooks": "^1.0.1",
+    "semantic-release": "^22.0.8",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "module": "./dist/index.es.js",
+  "types": "dist/lib/index.d.ts",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "npm run  lint",
+      "npm run  format"
+    ]
+  }
+}
