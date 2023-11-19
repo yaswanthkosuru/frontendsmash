@@ -89,7 +89,8 @@ publish:
     # variables:
     #     NPM_TOKEN: ${CI_JOB_TOKEN}
     script:
-        - echo "@smashorg://registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+        # - echo "@smashorg://registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+        - echo "@smashorg:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc
         - npx semantic-release --debug
         - npm publish
         - echo "-- publish completed succesfully"
