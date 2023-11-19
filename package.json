@@ -1,5 +1,5 @@
 {
-  "name": "smash-bot-frontend",
+  "name": "@smashbot/bot",
   "private": true,
   "version": "1.0.0",
   "type": "module",

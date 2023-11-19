@@ -1,30 +1,104 @@
-default:
-  image: node:latest
-  before_script:
-    - npm ci --cache .npm --prefer-offline
-    - |
-      {
-        echo "@${CI_PROJECT_ROOT_NAMESPACE}:registry=${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/npm/"
-        echo "${CI_API_V4_URL#https?}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=\${CI_JOB_TOKEN}"
-      } | tee -a .npmrc
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - .npm/
+# default:
+#   image: node:latest
+#   before_script:
+#     - npm ci --cache .npm --prefer-offline
+#     - |
+#       {
+#         echo "@${CI_PROJECT_ROOT_NAMESPACE}:registry=${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/npm/"
+#         echo "${CI_API_V4_URL#https?}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=\${CI_JOB_TOKEN}"
+#       } | tee -a .npmrc
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#     paths:
+#       - .npm/
 
-workflow:
-  rules:
-    - if: $CI_COMMIT_BRANCH
+# workflow:
+#   rules:
+#     - if: $CI_COMMIT_BRANCH
 
-variables:
-  NPM_TOKEN: ${CI_JOB_TOKEN}
+# variables:
+#   NPM_TOKEN: ${CI_JOB_TOKEN}
+
+# stages:
+#   - release
+
+# publish:
+#   stage: release
+#   script:
+#     - npm run semantic-release
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+image: node:latest
 
 stages:
-  - release
+    # - build
+    - publish
+
+# build:
+#     stage: build
+#     script:
+#         - npm install
+#         - CI=false npm run prepare
+#     cache:
+#         paths:
+#             - node_modules/
+#             - dist/
+#             - src/
+#             - docs/
+#     artifacts:
+#         expire_in: 1 days
+#         when: on_success
+#         paths:
+#             - node_modules/
+#             - dist/
+#             - src/
+
+# test:
+#     stage: test
+#     script:
+#         - npm run test
+#     dependencies:
+#         - build
+#     cache:
+#         paths:
+#             - coverage/
+#     artifacts:
+#         expire_in: 1 days
+#         when: on_success
+#         paths:
+#             - coverage/
+
+# pages:
+#     stage: document
+#     dependencies:
+#         - build
+#     script:
+#         - mkdir .public
+#         - cp -r docs/* .public
+#         - mv .public public
+#     artifacts:
+#         paths:
+#             - public
+#     only:
+#         - master
+#         - tags
 
 publish:
-  stage: release
-  script:
-    - npm run semantic-release
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    stage: publish
+    variables:
+        NPM_TOKEN: ${CI_JOB_TOKEN}
+
+    script:
+        - echo "@smashbot:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/" > .npmrc
+        - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+        - npm run semantic-release
+        - echo "-- publish completed succesfully"
+    rules:
+      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    # dependencies:
+    #     - build
+    #     # - test
+    # only:
+    #     - master
+    #     - tags
