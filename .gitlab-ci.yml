@@ -35,24 +35,24 @@ stages:
     # - build
     - publish
 
-# build:
-#     stage: build
-#     script:
-#         - npm install
-#         - CI=false npm run prepare
-#     cache:
-#         paths:
-#             - node_modules/
-#             - dist/
-#             - src/
-#             - docs/
-#     artifacts:
-#         expire_in: 1 days
-#         when: on_success
-#         paths:
-#             - node_modules/
-#             - dist/
-#             - src/
+build:
+    stage: build
+    script:
+        - npm install
+        - CI=false npm run prepare
+    # cache:
+    #     paths:
+    #         - node_modules/
+    #         - dist/
+    #         - src/
+    #         - docs/
+    artifacts:
+        expire_in: 1 days
+        when: on_success
+        paths:
+            - node_modules/
+            - dist/
+            - src/
 
 # test:
 #     stage: test
@@ -92,7 +92,7 @@ publish:
     script:
         - echo "@smashbot:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/" > .npmrc
         - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-        - npm run semantic-release
+        - npx semantic-release --debug
         - echo "-- publish completed succesfully"
     rules:
       - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
