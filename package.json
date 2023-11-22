@@ -69,6 +69,6 @@
     ]
   },
   "publishConfig":{
-    "@smashorg:registry": "https://gitlab.com/api/v4/projects/51982500/packages/npm/"
+    "@khyatithakur:registry": "https://gitlab.com/api/v4/projects/51982500/packages/npm/"
   }
 }
