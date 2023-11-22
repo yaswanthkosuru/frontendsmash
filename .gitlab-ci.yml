@@ -94,7 +94,7 @@ publish:
         # - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
         # - echo "@khyatithakur:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc
         - npx semantic-release --debug
-        - npm publish
+        - npm publish --access=public
         - echo "-- publish completed succesfully"
     rules:
       - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
