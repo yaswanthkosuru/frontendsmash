@@ -89,10 +89,10 @@ publish:
     # variables:
     #     NPM_TOKEN: ${CI_JOB_TOKEN}
     script:
-        - echo "@khyatithakur:registry=https://gitlab.com/api/v4/packages/npm/" >> .npmrc
-        - echo "//gitlab.com/api/v4/packages/npm/:_authToken=${NPM_TOKEN}" >> .npmrc
-        - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
-        - echo "@khyatithakur:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc
+        # - echo "@khyatithakur:registry=https://gitlab.com/api/v4/packages/npm/" >> .npmrc
+        # - echo "//gitlab.com/api/v4/packages/npm/:_authToken=${NPM_TOKEN}" >> .npmrc
+        # - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
+        # - echo "@khyatithakur:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc
         - npx semantic-release --debug
         - npm publish
         - echo "-- publish completed succesfully"
