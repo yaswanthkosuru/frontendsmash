@@ -67,5 +67,8 @@
       "npm run  lint",
       "npm run  format"
     ]
+  },
+  "publishConfig":{
+    "@smashorg:registry": "https://gitlab.com/api/v4/projects/51982500/packages/npm/"
   }
 }
