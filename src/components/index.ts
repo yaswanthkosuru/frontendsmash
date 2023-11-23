@@ -1,3 +1,3 @@
-export type { IHelloWorld } from './Helloworld'
-export { Helloworld } from './Helloworld'
+export type { IHelloWorld } from './HelloWorld'
+export { Helloworld } from './HelloWorld'
 import './styles.css'
