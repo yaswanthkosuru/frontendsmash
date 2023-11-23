@@ -31,32 +31,28 @@
 
 image: node:latest
 
-before_script:
-   - npm install
-   - CI=false npm run prepare
-
-
 stages:
+    - build
     - publish
 
-# build:
-#     stage: build
-#     script:
-#         - npm install
-#         - CI=false npm run prepare
-#     # cache:
-#     #     paths:
-#     #         - node_modules/
-#     #         - dist/
-#     #         - src/
-#     #         - docs/
-#     artifacts:
-#         expire_in: 1 days
-#         when: on_success
-#         paths:
-#             - node_modules/
-#             - dist/
-#             - src/
+build:
+    stage: build
+    script:
+        - npm install
+        - CI=false npm run prepare
+    # cache:
+    #     paths:
+    #         - node_modules/
+    #         - dist/
+    #         - src/
+    #         - docs/
+    artifacts:
+        expire_in: 1 days
+        when: on_success
+        paths:
+            - node_modules/
+            - dist/
+            - src/
 
 # test:
 #     stage: test
@@ -102,8 +98,8 @@ publish:
         - echo "-- publish completed succesfully"
     rules:
       - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-    # dependencies:
-    #   - build
+    dependencies:
+      - build
       # - test
     # only:
     #     - master
