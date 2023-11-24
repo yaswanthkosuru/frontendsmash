@@ -29,7 +29,7 @@ export default defineConfig((configEnv) => ({
   build: {
     minify: true,
     lib: {
-      entry: path.resolve('src', 'components/index.ts'),
+      entry: path.resolve('src', 'index.ts'),
       formats: ['es'],
       fileName: (format) => `index.${format}.js`,
     },
