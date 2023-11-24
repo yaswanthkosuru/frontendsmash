@@ -1,7 +1,7 @@
-import { ChakraProvider, Stack } from '@chakra-ui/react'
+import { useState } from 'react'
+import { ChakraProvider, Stack, useColorMode } from '@chakra-ui/react'
 import InterviewToggleButton from '../components/InterviewToggleButton'
 import InterviewScreen from '../components/InterviewScreen'
-import { useState } from 'react'
 import ToggleTheme from '../components/ToggleTheme'
 
 const Interview = () => {
@@ -9,12 +9,16 @@ const Interview = () => {
 	const toggleInterview = () => {
 		setShowInterview(!showInterview)
 	}
+	const { colorMode } = useColorMode()
+
 	return (
 		<ChakraProvider>
 			<Stack h={'100vh'}>
-				<ToggleTheme />
-				<InterviewToggleButton onClick={toggleInterview} showInterview={showInterview} />
-				{showInterview && <InterviewScreen />}
+				<Stack bg={colorMode === 'light' ? '#F5F5F5' : '#1A202C'}>
+					<ToggleTheme />
+					<InterviewToggleButton onClick={toggleInterview} showInterview={showInterview} />
+					{showInterview && <InterviewScreen />}
+				</Stack>
 			</Stack>
 		</ChakraProvider>
 	)
