@@ -14,6 +14,7 @@ const ToggleTheme = () => {
 				position={'absolute'}
 				top={'20px'}
 				right={'20px'}
+				zIndex={20}
 			>
 				{colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
 			</Button>
