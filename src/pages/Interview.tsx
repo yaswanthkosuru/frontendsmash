@@ -4,6 +4,7 @@ import InterviewToggleButton from '../components/InterviewToggleButton'
 // import InterviewScreen from '../components/InterviewScreen'
 import ToggleTheme from '../components/ToggleTheme'
 import InterviewScreenTrial from '../components/InterviewScreenTrial'
+import InterviewScreenVideoBot from '../components/InterviewScreenVideoBot'
 // import MultipleChoiceButton from '../components/MultipleChoiceButton'
 
 const Interview = () => {
@@ -31,7 +32,7 @@ const Interview = () => {
 						<InterviewScreen name={'Prasoon Soni'} smashUserId={'1234'} botPreference="male" />
 					)} */}
 					{showInterview && (
-						<InterviewScreenTrial name={'Prasoon Soni'} smashUserId={'1234'} botPreference="male" />
+						<InterviewScreenVideoBot name={'Prasoon Soni'} smashUserId={'6440'} botPreference="male" />
 					)}
 				</Stack>
 			</Stack>

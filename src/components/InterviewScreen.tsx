@@ -390,40 +390,6 @@ const InterviewScreen: React.FC<InterviewScreenProps> = ({ name, smashUserId, bo
 		<div>
 			<MobileView>
 				<div>
-					{/* <Modal
-						// open={open}
-						// onClose={handleClose}
-						aria-labelledby="modal-modal-title" children={undefined} isOpen={false} onClose={function (): void {
-							throw new Error('Function not implemented.')
-						} }					>
-						<Stack
-							justifyContent="center"
-							alignItems="center"
-							sx={{
-								position: 'absolute',
-								top: '50%',
-								left: '50%',
-								transform: 'translate(-50%, -50%)',
-								width: '400px',
-								// bgcolor: "background.paper",
-								// border: "2px solid",
-								// boxShadow: 24,
-								p: 4,
-							}}
-						>
-							<Button
-								variant="contained"
-								onClick={startInterview}
-								p={0}
-								sx={{ width: '175px' }}
-								// startIcon={<PlayCircleFilledWhiteIcon />}
-							>
-								Start Demo
-							</Button>
-						</Stack>
-					</Modal> */}
-					{/* {!hasInterviewEnded && <Header />} */}
-					{/* {loading && !hasInterviewEnded && <CircularStatic />} */}
 					{!loading && !hasInterviewEnded && (
 						<ReactPlayer
 							ref={reactPlayerRef}
@@ -452,56 +418,13 @@ const InterviewScreen: React.FC<InterviewScreenProps> = ({ name, smashUserId, bo
 								handleAnswer={() => {}}
 								updateIsListening={updateIsListening}
 								questionId={currentQuestionIndex}
-								// candidateName={''}
-								isPractice={true}
-								enabledRecording={isRecording}
-								isTooltipRunning={false}
-								// setIsTooltipRunning={function (isTooltipRunning: boolean): void {
-								// 	throw new Error('Function not implemented.')
-								// }}
-								// setStepIndex={function (stepIndex: number): void {
-								// 	throw new Error('Function not implemented.')
-								// }}
+								goToNextQuestion={goToNextQuestion}
 							/>
 						</div>
 					)}
 				</div>
 			</MobileView>
 			<BrowserView>
-				{/* <Modal
-					// open={open}
-					// onClose={handleClose}
-					aria-labelledby="modal-modal-title"
-					aria-describedby="modal-modal-description"
-				>
-					<Stack
-						justifyContent="center"
-						alignItems="center"
-						sx={{
-							position: 'absolute',
-							top: '50%',
-							left: '50%',
-							transform: 'translate(-50%, -50%)',
-							width: '400px',
-							// bgcolor: "background.paper",
-							// border: "2px solid",
-							// boxShadow: 24,
-							p: 4,
-						}}
-					>
-						<Button
-							variant="contained"
-							onClick={startInterview}
-							p={0}
-							sx={{ width: '175px' }}
-							// startIcon={<PlayCircleFilledWhiteIcon />}
-						>
-							Start Demo
-						</Button>
-					</Stack>
-				</Modal> */}
-				{/* {!hasInterviewEnded && <Header />} */}
-				{/* {loading && !hasInterviewEnded && <CircularStatic />} */}
 				{!loading && !hasInterviewEnded && (
 					<ReactPlayer
 						ref={reactPlayerRef}
@@ -545,19 +468,10 @@ const InterviewScreen: React.FC<InterviewScreenProps> = ({ name, smashUserId, bo
 									handleAnswer={() => {}}
 									updateIsListening={updateIsListening}
 									questionId={currentQuestionIndex}
-									// candidateName={''}
-									isPractice={true}
-									enabledRecording={isRecording}
-									isTooltipRunning={false}
-									// setIsTooltipRunning={function (isTooltipRunning: boolean): void {
-									// 	throw new Error('Function not implemented.')
-									// }}
-									// setStepIndex={function (stepIndex: number): void {
-									// 	throw new Error('Function not implemented.')
-									// }}
+									goToNextQuestion={goToNextQuestion}
 								/>
 							)}
-							{showSkipButton && <SkipButton skipQuestion={skipQuestion} />}
+							{/* {showSkipButton && <SkipButton skipQuestion={skipQuestion} />} */}
 						</Stack>
 					</>
 				)}

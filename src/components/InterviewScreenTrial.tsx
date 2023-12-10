@@ -46,6 +46,7 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 	const [category, setCategory] = useState('')
 	const [questions, setQuestions] = useState<Question[]>([])
 	const [skipLoading, setSkipLoading] = useState(false)
+
 	const formatCategory = (category: string) => {
 		const categoryWords = category.split('_')
 		let formattedCategory = ''
@@ -54,6 +55,7 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 		}
 		return formattedCategory
 	}
+
 	const skipQuestion = async () => {
 		setSkipLoading(true)
 		const { data } = await axios.post(`${API_URL}/user/answer/skip`, {
@@ -97,14 +99,11 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 		}
 	}
 	const goToNextQuestion = () => {
-		if (currentQuestionIndex === questions.length - 1) {
-			getData()
-			return
-		}
 		setCurrentQuestionIndex(currentQuestionIndex + 1)
 		setShowReplayButton(true)
 		setShowSkipButton(true)
 	}
+
 	const getData = async () => {
 		setLoading(true)
 		const { data } = await axios.post(`${API_URL}/user/login`, {
