@@ -32,7 +32,7 @@ const Interview = () => {
 						<InterviewScreen name={'Prasoon Soni'} smashUserId={'1234'} botPreference="male" />
 					)} */}
 					{showInterview && (
-						<InterviewScreenVideoBot name={'Prasoon Soni'} smashUserId={'6440'} botPreference="male" />
+						<InterviewScreenVideoBot name={'Prasoon Soni'} smashUserId={'6450'} botPreference="male" />
 					)}
 				</Stack>
 			</Stack>

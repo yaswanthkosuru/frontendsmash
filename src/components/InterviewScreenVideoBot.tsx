@@ -215,9 +215,10 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
   };
 
   const handlePostQuestionAction = () => {
+    console.log('handlepostquestionaction');
     if (
         !isListening &&
-        currentQuestionIndex < questionsTimestamps.length - 1
+        currentQuestionIndex <= questionsTimestamps.length - 1
     ) {
         setIsListening(true);
         handleListeningLoop();
@@ -231,12 +232,14 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
       );
       setHasVideoStarted(true);
     }
+    console.log('currentQuestionIndex', currentQuestionIndex);
+    console.log('questionTimestamps.length', questionsTimestamps.length);
     if (
 			isPositiveResponse &&
-			playedSeconds >= responseTimestamps[currentQuestionIndex].end_time
+			playedSeconds >= responseTimestamps[currentQuestionIndex].end_time &&
+      currentQuestionIndex <= questionsTimestamps.length
 		) {
-			console.log('currentQuestionIndex', currentQuestionIndex)
-			if (currentQuestionIndex === questionsTimestamps.length - 1) {
+			if (currentQuestionIndex === questionsTimestamps.length) {
 				setHasInterviewEnded(true)
 			} else {
 				setCurrentQuestionIndex((prevIndex) => prevIndex + 1)
@@ -249,22 +252,22 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			playedSeconds >= skipTimestamps[currentQuestionIndex].end_time &&
 			currentQuestionIndex <= questionsTimestamps.length
 		) {
-			console.log('inside is skip')
-			setShowSkipButton(false)
-			setShowReplayButton(false)
-			if (currentQuestionIndex === questionsTimestamps.length - 1) {
+      if (currentQuestionIndex === questionsTimestamps.length) {
 				setHasInterviewEnded(true)
 			} else {
-				setCurrentQuestionIndex((prevIndex) => prevIndex + 1)
-				setIsSkip(false)
-				setIsListening(false)
-			}
+        console.log('inside is skip')
+        setShowSkipButton(false)
+        setShowReplayButton(false)
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1)
+        setIsSkip(false)
+        setIsListening(false)
+      }
 		}
     if (
         !isListening &&
         !isPositiveResponse &&
         !isSkip &&
-        currentQuestionIndex !== questionsTimestamps.length - 1 &&
+        currentQuestionIndex !== questionsTimestamps.length &&
         playedSeconds >= questionsTimestamps[currentQuestionIndex].end_time
     ) {
         setIsRecording(true);
@@ -274,7 +277,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
     }
 
     if (
-        currentQuestionIndex >= questionsTimestamps.length - 1 &&
+        currentQuestionIndex >= questionsTimestamps.length  &&
         playedSeconds >=
             questionsTimestamps[currentQuestionIndex].start_time
         // !updateAnswerToDatabase
@@ -282,15 +285,18 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
         setIsListening(false);
         setIsRecording(false);
         setShowReplayButton(false);
+        setShowSkipButton(false);
     }
-    if (
-        currentQuestionIndex === questionsTimestamps.length - 1 &&
-        playedSeconds >= questionsTimestamps?.[currentQuestionIndex].end_time
-    ) {
-        setHasInterviewEnded(true);
-        setIsListening(false);
-        setIsRecording(false);
-    }
+    // if (
+    //     currentQuestionIndex === questionsTimestamps.length &&
+    //     playedSeconds >= questionsTimestamps?.[currentQuestionIndex].end_time
+    // ) {
+    //     setHasInterviewEnded(true);
+    //     setIsListening(false);
+    //     setIsRecording(false);
+    //     setShowReplayButton(false);
+    //     setShowSkipButton(false);
+    // }
 
     if (isListening && playedSeconds >= listeningTimestamps.end_time) {
         reactPlayerRef?.current?.seekTo(listeningTimestamps.start_time);
@@ -298,7 +304,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
   };
 
   const handleEnded = () => {
-    if (currentQuestionIndex < questionsTimestamps.length - 1) {
+    if (currentQuestionIndex <= questionsTimestamps.length - 1) {
       handlePostQuestionAction();
     } else {
       setHasInterviewEnded(true);
@@ -403,7 +409,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 							mr={'auto'}
 							ml={'auto'}
 						>
-							{showReplayButton && <ReplayButton replayQuestion={() => {}} />}
+							{showReplayButton && !hasInterviewEnded && <ReplayButton replayQuestion={() => {}} />}
 							{/* {questions.length > 0 &&
 								questions[currentQuestionIndex].question_type === 'multiple-choice' && (
 									<MultipleChoiceButton
@@ -413,7 +419,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 										goToNextQuestion={goToNextQuestion}
 									/>
 								)} */}
-							{questions.length > 0 && isRecording && (
+							{questions.length > 0 && isRecording && !hasInterviewEnded && (
 									<AudioRecorder
 										interviewKey={interviewKey}
 										handleAnswer={() => {}}
@@ -422,7 +428,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 										goToNextQuestion={goToNextQuestion}
 									/>
 								)}
-							{showSkipButton && (
+							{showSkipButton && !hasInterviewEnded && (
 								<SkipButton skipQuestion={skipQuestion} skipLoading={skipLoading} />
 							)}
 						</Stack>
