@@ -152,7 +152,7 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 								{/* <Button colorScheme="green" mr={3} onClick={getData}>
 									Go To Next Category
 								</Button> */}
-								<Button colorScheme="blue" mr={3} onClick={onClose}>
+								<Button colorScheme="facebook" mr={3} onClick={onClose}>
 									Close
 								</Button>
 							</ModalFooter>

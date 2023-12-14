@@ -62,7 +62,7 @@ const MultipleChoiceButton: React.FC<MultipleChoiceButtonProps> = ({
 				{options.map((option) => (
 					<Button
 						key={option}
-						colorScheme={selectedOption === option ? 'blue' : 'gray'}
+						colorScheme={selectedOption === option ? 'facebook' : 'gray'}
 						onClick={() => handleButtonClick(option)}
 					>
 						{option}
