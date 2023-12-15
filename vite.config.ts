@@ -28,6 +28,9 @@ export default defineConfig((configEnv) => ({
   ],
   build: {
     minify: true,
+    root: 'src',
+    outDir: '../dist',
+    emptyOutDir: true,
     lib: {
       entry: path.resolve('src', 'index.ts'),
       formats: ['es'],
