@@ -4,8 +4,8 @@ import { Button, Image, Progress, Spinner, Stack, Text, Tooltip, useToast } from
 import React, { useEffect, useState, useRef } from 'react'
 import { ReplayButton } from './ReplayButton'
 import { SkipButton } from './SkipButton'
-import half_way from '../images/half_way.gif'
-import halfway from '../images/halfway.png'
+import half_way from '/images/half_way.gif'
+import halfway from '/images/halfway.png'
 // import MultipleChoiceButton from './MultipleChoiceButton'
 import {
 	Modal,

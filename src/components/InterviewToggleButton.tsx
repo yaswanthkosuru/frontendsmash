@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Image, Tooltip } from '@chakra-ui/react'
 // import { ChatIcon, CloseIcon } from '@chakra-ui/icons'
 // import avatar from '../images/avatar.png'
-import avatar_gif from '../images/avatar_gif.gif'
+import avatar_gif from '/images/avatar_gif.gif'
 import { FiX } from 'react-icons/fi'
 
 interface InterviewToggleButtonProps {

@@ -1,7 +1,7 @@
 {
   "name": "@smashorg/ai-bot",
   "private": false,
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "files": [
     "dist/*",
@@ -10,10 +10,10 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && cp -r ./dist",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix 'src/**/*.{jsx,ts,tsx}'",
-    "format": "prettier --write src//**/*.{ts,tsx,css} --config ./.prettierrc",
+    "format": "prettier --write src//**/*.{ts,tsx} --config ./.prettierrc",
     "preview": "vite preview",
     "prepare": "husky install",
     "semantic-release": "semantic-release"
