@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "vite",
     "clean": "rimraf dist",
-    "build": "npm clean && tsc && vite build",
+    "build": "npm run clean && tsc && vite build",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix 'src/**/*.{jsx,ts,tsx}'",
     "format": "prettier --write src//**/*.{ts,tsx} --config ./.prettierrc",
