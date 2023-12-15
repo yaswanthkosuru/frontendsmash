@@ -84,8 +84,8 @@ image: node:latest
 #         - master
 #         - tags
 
-publish:
-    stage: publish
+deploy:
+    stage: deploy
     # variables:
     #     NPM_TOKEN: ${CI_JOB_TOKEN}
     script:
