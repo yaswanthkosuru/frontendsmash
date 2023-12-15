@@ -94,9 +94,9 @@ deploy:
         # - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
         # - echo "@khyatithakur:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc
         # - CI=false npm run prepare
-        - npx semantic-release --debug
         - CI=false npm install
         - npm run build
+        - npx semantic-release --debug
         - npm publish --access=public
         - echo "-- publish completed succesfully"
     rules:
