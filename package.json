@@ -1,7 +1,7 @@
 {
   "name": "@smashorg/ai-bot",
   "private": false,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "type": "module",
   "files": [
     "dist/*",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && cp -r ./dist",
+    "build": "tsc && vite build src --emptyOutDir",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix 'src/**/*.{jsx,ts,tsx}'",
     "format": "prettier --write src//**/*.{ts,tsx} --config ./.prettierrc",
