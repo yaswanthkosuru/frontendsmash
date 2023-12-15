@@ -21,6 +21,6 @@
     "allowImportingTsExtensions": true,
     //"types": ["axe-playwright"]
   },
-  "include": ["src"],
+  "include": ["src", "dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

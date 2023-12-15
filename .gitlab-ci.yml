@@ -31,28 +31,28 @@
 
 image: node:latest
 
-stages:
-    - build
-    - publish
+# stages:
+#     - build
+#     - publish
 
-build:
-    stage: build
-    script:
-        - npm install
-        - CI=false npm run prepare
-    # cache:
-    #     paths:
-    #         - node_modules/
-    #         - dist/
-    #         - src/
-    #         - docs/
-    artifacts:
-        expire_in: 1 days
-        when: on_success
-        paths:
-            - node_modules/
-            - dist/
-            - src/
+# build:
+#     stage: build
+#     script:
+#         - npm install
+#         - CI=false npm run prepare
+#     # cache:
+#     #     paths:
+#     #         - node_modules/
+#     #         - dist/
+#     #         - src/
+#     #         - docs/
+#     artifacts:
+#         expire_in: 1 days
+#         when: on_success
+#         paths:
+#             - node_modules/
+#             - dist/
+#             - src/
 
 # test:
 #     stage: test
@@ -93,13 +93,15 @@ publish:
         # - echo "//gitlab.com/api/v4/packages/npm/:_authToken=${NPM_TOKEN}" >> .npmrc
         # - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
         # - echo "@khyatithakur:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc
+        - npm install
+        - CI=false npm run prepare
         - npx semantic-release --debug
         - npm publish --access=public
         - echo "-- publish completed succesfully"
     rules:
       - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-    dependencies:
-      - build
+    # dependencies:
+    #   - build
       # - test
     # only:
     #     - master

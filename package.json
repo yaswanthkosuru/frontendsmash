@@ -1,16 +1,17 @@
 {
   "name": "@smashorg/ai-bot",
   "private": false,
-  "version": "1.0.9",
+  "version": "1.0.10",
   "type": "module",
   "files": [
     "dist/*",
     "src/*",
     "types/*"
   ],
+  "main": "dist/index.es.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build src --emptyOutDir",
+    "build": "tsc && vite build",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix 'src/**/*.{jsx,ts,tsx}'",
     "format": "prettier --write src//**/*.{ts,tsx} --config ./.prettierrc",
@@ -53,6 +54,7 @@
     "eslint-plugin-react-refresh": "^0.4.4",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^8.0.3",
+    "local-package-publisher": "^1.0.5",
     "prettier": "^3.1.0",
     "react-hooks": "^1.0.1",
     "semantic-release": "^22.0.8",
@@ -64,7 +66,7 @@
     "react-dom": "^18.2.0"
   },
   "module": "./dist/index.es.js",
-  "types": "dist/lib/index.d.ts",
+  "types": "dist/index.d.ts",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
