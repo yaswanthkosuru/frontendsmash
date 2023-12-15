@@ -50,6 +50,7 @@ build:
         expire_in: 1 days
         when: on_success
         paths:
+            - node_modules/
             - dist/
             - src/
 
