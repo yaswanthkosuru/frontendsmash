@@ -4,13 +4,12 @@ import { useState, useEffect } from 'react'
 import { Button, Stack, Text, Tooltip, useToast } from '@chakra-ui/react'
 import { v4 as uuidv4 } from 'uuid'
 import { useAudioRecorder } from 'react-audio-voice-recorder'
-import { FiMic, FiMicOff, FiCheck } from 'react-icons/fi'
+import { FiMic, FiCheck } from 'react-icons/fi'
 import axios from 'axios'
 import { API_URL } from '../utils/constants'
 
 // const audioRecorder = new MicRecorder({ bitRate: 16 });
 
-const mimeType = 'audio/mpeg'
 interface AudioRecorderProps {
 	interviewKey: string
 	handleAnswer: (answer: string, key: string) => void
@@ -23,9 +22,8 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 	const toast = useToast()
 	const [recordingStatus, setRecordingStatus] = useState('inactive')
 	const [showSubmitButton, setShowSubmitButton] = useState(false)
-	const [isRecordingStarted, setIsRecordingStarted] = useState(false)
-	const [isStopRecordingTooltip, setStopRecordingTooltip] = useState(false)
-	const [error, setError] = useState(false)
+	const [, setIsRecordingStarted] = useState(false)
+	const [, setError] = useState(false)
 
 	useEffect(() => {
 		setIsRecordingStarted(false)
@@ -40,7 +38,7 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 	// 	uploadRecording(recordingBlob)
 	// }, [recordingBlob])
 
-	const uploadRecording = async (recordingBlob: BlobPart) => {
+	const uploadRecording = async (recordingBlob: BlobPart | any) => {
 		const myUuid = uuidv4()
 		const key = `${myUuid}_${interviewKey}.mp3`
 		const file = new File([recordingBlob], key, { type: 'audio/mpeg' })
