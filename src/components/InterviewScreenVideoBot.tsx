@@ -463,7 +463,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									url={desktopQuestionsVideo}
 									playing={desktopPlaying}
 									style={{
-										zIndex: -1,
+										zIndex: 1,
 										borderRadius: '30px',
 									}}
 									playsinline={desktopPlaysinline}
@@ -489,6 +489,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 							right={0}
 							mr={'auto'}
 							ml={'auto'}
+							zIndex={2}
 						>
 							{showReplayButton && !hasInterviewEnded && (
 								<ReplayButton replayQuestion={replayQuestion} />
