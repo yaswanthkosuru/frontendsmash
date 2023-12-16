@@ -413,6 +413,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									position={'absolute'}
 									bottom={'10px'}
 									colorScheme="facebook"
+									zIndex={2}
 								/>
 								<Stack
 									direction={'column'}
@@ -421,6 +422,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									left={'12vw'}
 									spacing={0}
 									gap={0}
+									zIndex={2}
 								>
 									<Tooltip
 										label={questions[currentQuestionIndex].question_text}
