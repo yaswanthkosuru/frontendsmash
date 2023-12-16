@@ -34,7 +34,7 @@ const InterviewToggleButton: React.FC<InterviewToggleButtonProps> = ({
 				onClick={onClick}
 				justifyContent={'center'}
 				alignItems={'center'}
-				zIndex={1}
+				zIndex={2}
 			>
 				{showInterview ? (
 					// <Image h={'80px'} src={<FiX />} borderRadius={'50%'} />
