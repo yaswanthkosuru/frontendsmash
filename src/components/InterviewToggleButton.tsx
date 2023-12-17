@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Image, Tooltip } from '@chakra-ui/react'
 // import { ChatIcon, CloseIcon } from '@chakra-ui/icons'
 // import avatar from '../images/avatar.png'
-import avatar_gif from '/images/avatar_gif.gif'
+//import avatar_gif from '/images/avatar_gif.gif'
 import { FiX } from 'react-icons/fi'
 
 interface InterviewToggleButtonProps {
@@ -14,6 +14,7 @@ const InterviewToggleButton: React.FC<InterviewToggleButtonProps> = ({
 	onClick,
 	showInterview,
 }) => {
+	const imgUrl = new URL('./images/avatar_gif.gif', import.meta.url).href;
 	return (
 		<Tooltip hasArrow label={showInterview ? 'Hide Interview' : 'Show Interview'} placement="left">
 			<Button
@@ -40,7 +41,7 @@ const InterviewToggleButton: React.FC<InterviewToggleButtonProps> = ({
 					// <Image h={'80px'} src={<FiX />} borderRadius={'50%'} />
 					<FiX size={'60px'} />
 				) : (
-					<Image h={'80px'} src={avatar_gif} borderRadius={'50%'} />
+					<Image h={'80px'} src={imgUrl} borderRadius={'50%'} />
 				)}
 			</Button>
 		</Tooltip>
