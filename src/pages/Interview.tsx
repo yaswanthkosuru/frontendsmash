@@ -7,7 +7,13 @@ import ToggleTheme from '../components/ToggleTheme'
 import InterviewScreenVideoBot from '../components/InterviewScreenVideoBot'
 // import MultipleChoiceButton from '../components/MultipleChoiceButton'
 
-const Interview = () => {
+interface Props {
+	name: string
+	smashUserId: string
+	botPreference: string
+}
+
+const Interview = ({ name, smashUserId, botPreference }: Props) => {
 	const [showInterview, setShowInterview] = useState(false)
 	const toggleInterview = () => {
 		setShowInterview(!showInterview)
@@ -32,7 +38,12 @@ const Interview = () => {
 						<InterviewScreen name={'Prasoon Soni'} smashUserId={'1234'} botPreference="male" />
 					)} */}
 					{showInterview && (
-						<InterviewScreenVideoBot name={'Prasoon Soni'} smashUserId={'1'} botPreference="male" />
+						// <InterviewScreenVideoBot name={'Prasoon Soni'} smashUserId={'1'} botPreference="male" />
+						<InterviewScreenVideoBot
+							name={name}
+							smashUserId={smashUserId}
+							botPreference={botPreference}
+						/>
 					)}
 				</Stack>
 			</Stack>
