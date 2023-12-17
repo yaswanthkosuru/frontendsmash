@@ -13,7 +13,8 @@ interface Props {
 	botPreference: string
 }
 
-const Interview = ({ name, smashUserId, botPreference }: Props) => {
+const Interview = (props: Props) => {
+	const { name, smashUserId, botPreference } = props
 	const [showInterview, setShowInterview] = useState(false)
 	const toggleInterview = () => {
 		setShowInterview(!showInterview)
