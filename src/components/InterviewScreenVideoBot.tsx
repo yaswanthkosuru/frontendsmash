@@ -4,7 +4,7 @@ import { Button, Image, Progress, Spinner, Stack, Text, Tooltip, useToast } from
 import React, { useEffect, useState, useRef } from 'react'
 import { ReplayButton } from './ReplayButton'
 import { SkipButton } from './SkipButton'
-import halfway from '/images/halfway.png'
+// import halfway from '/images/halfway.png'
 // import MultipleChoiceButton from './MultipleChoiceButton'
 import {
 	Modal,
@@ -45,6 +45,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	smashUserId,
 	botPreference,
 }) => {
+	const halfway = new URL('./images/halfway.png', import.meta.url).href;
 	const reactPlayerRef = useRef<ReactPlayer>(null)
 	const introVideoRef = useRef(null)
 	const toast = useToast()
