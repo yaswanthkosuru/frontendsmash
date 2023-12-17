@@ -6,7 +6,7 @@ import Interview from './pages/Interview.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<ChakraProvider>
-			<Interview />
+			<Interview name="test" smashUserId="0" botPreference="male" />
 		</ChakraProvider>
 	</React.StrictMode>,
 )
