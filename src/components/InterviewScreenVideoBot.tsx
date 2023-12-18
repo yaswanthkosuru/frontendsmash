@@ -26,6 +26,7 @@ interface InterviewScreenProps {
 	name: string
 	smashUserId: string
 	botPreference: string
+	setKey: (key: string) => void
 }
 
 interface Question {
@@ -44,8 +45,9 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	name,
 	smashUserId,
 	botPreference,
+	setKey,
 }) => {
-	const halfway = new URL('./images/halfway.png', import.meta.url).href;
+	//const halfway = new URL('./images/halfway.png', import.meta.url).href;
 	const reactPlayerRef = useRef<ReactPlayer>(null)
 	const introVideoRef = useRef(null)
 	const toast = useToast()
@@ -77,17 +79,17 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	const [hasInterviewEnded, setHasInterviewEnded] = useState(false)
 	const [isPositiveResponse, setIsPositiveResponse] = useState(false)
 	const [isSkip, setIsSkip] = useState(false)
-	const [showHalfWay, setShowHalfWay] = useState(false)
+	// const [showHalfWay, setShowHalfWay] = useState(false)
 
-	useEffect(() => {
-		if (showHalfWay) {
-			setTimeout(() => {
-				setShowHalfWay(false)
-				setDesktopPlaying(true)
-				setDesktopPlaysinline(true)
-			}, 3000)
-		}
-	}, [showHalfWay])
+	// useEffect(() => {
+	// 	if (showHalfWay) {
+	// 		setTimeout(() => {
+	// 			setShowHalfWay(false)
+	// 			setDesktopPlaying(true)
+	// 			setDesktopPlaysinline(true)
+	// 		}, 3000)
+	// 	}
+	// }, [showHalfWay])
 
 	useEffect(() => {
 		if (isListening) {
@@ -108,11 +110,11 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 		// if (currentQuestionIndex === questionTimestamps.length - 1) {
 		//     updateInterviewEnded();
 		// }
-		if (currentQuestionIndex === 1) {
-			setDesktopPlaying(false)
-			setDesktopPlaysinline(false)
-			setShowHalfWay(true)
-		}
+		// if (currentQuestionIndex === 1) {
+		// 	setDesktopPlaying(false)
+		// 	setDesktopPlaysinline(false)
+		// 	setShowHalfWay(true)
+		// }
 	}, [currentQuestionIndex])
 
 	const formatCategory = (category: string) => {
@@ -218,6 +220,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 		if (data.success) {
 			setQuestions(data?.data?.questions)
 			setInterviewKey(data?.data?.interview_key)
+			setKey(data?.data?.interview_key)
 			setCategory(data?.data?.category)
 			setCurrentQuestionIndex(0)
 			setListeningTimestamps(data?.data?.listening_timestamps)
@@ -341,8 +344,10 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	}
 
 	useEffect(() => {
-		getData()
-	}, [name, smashUserId, botPreference])
+		if (!interviewKey) {
+			getData()
+		}
+	}, [interviewKey])
 
 	return (
 		<>
@@ -368,7 +373,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 						</ModalContent>
 					</Modal>
 					<Stack justifyContent={'center'} alignItems={'center'}>
-						{showHalfWay && <Image src={halfway} position={'absolute'} w="80vw" h={'80vh'} />}
+						{/* {showHalfWay && <Image src={halfway} position={'absolute'} w="80vw" h={'80vh'} />} */}
 						{category.length > 0 && (
 							<Text border={'1px solid #fff'} p={2} borderRadius={'20px'} fontSize={'1.3rem'}>
 								{formatCategory(category)}

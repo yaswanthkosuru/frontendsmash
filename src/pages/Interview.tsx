@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { ChakraProvider, Stack, Text } from '@chakra-ui/react'
+import { ChakraProvider, Stack, Text, useToast } from '@chakra-ui/react'
 import InterviewToggleButton from '../components/InterviewToggleButton'
 // import InterviewScreen from '../components/InterviewScreen'
 import ToggleTheme from '../components/ToggleTheme'
 // import InterviewScreenTrial from '../components/InterviewScreenTrial'
 import InterviewScreenVideoBot from '../components/InterviewScreenVideoBot'
+import axios from 'axios'
+import { API_URL } from '../utils/constants'
 // import MultipleChoiceButton from '../components/MultipleChoiceButton'
 
 interface Props {
@@ -16,7 +18,42 @@ interface Props {
 const Interview = (props: Props) => {
 	const { name, smashUserId, botPreference } = props
 	const [showInterview, setShowInterview] = useState(false)
+	const toast = useToast()
+	const [key, setKey] = useState('')
+	const skipAllQuestion = async () => {
+		if (key) {
+			const { data } = await axios.post(`${API_URL}/user/answer/skip/all`, {
+				interview_key: key,
+			})
+			if (data.success) {
+				toast({
+					title: 'Interview Skipped',
+					status: 'success',
+					duration: 3000,
+					isClosable: true,
+				})
+			} else {
+				toast({
+					title: 'Failed to skip interview',
+					status: 'error',
+					duration: 3000,
+					isClosable: true,
+				})
+			}
+		} else {
+			toast({
+				title: 'Interview key empty',
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			})
+		}
+	}
 	const toggleInterview = () => {
+		if (showInterview) {
+			skipAllQuestion()
+			setKey('')
+		}
 		setShowInterview(!showInterview)
 	}
 	// const { colorMode } = useColorMode()
@@ -44,6 +81,7 @@ const Interview = (props: Props) => {
 							name={name}
 							smashUserId={smashUserId}
 							botPreference={botPreference}
+							setKey={setKey}
 						/>
 					)}
 				</Stack>
