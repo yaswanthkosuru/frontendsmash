@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Image, Progress, Spinner, Stack, Text, Tooltip, useToast } from '@chakra-ui/react'
+import { Button, Progress, Spinner, Stack, Text, Tooltip, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState, useRef } from 'react'
 import { ReplayButton } from './ReplayButton'
 import { SkipButton } from './SkipButton'
@@ -60,8 +60,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	const [, setShowQuestionsVideo] = useState(false)
 	const [showReplayButton, setShowReplayButton] = useState(false)
 	const [showSkipButton, setShowSkipButton] = useState(false)
-	const [desktopPlaying, setDesktopPlaying] = useState(true)
-	const [desktopPlaysinline, setDesktopPlaysinline] = useState(true)
 	const [isRecording, setIsRecording] = useState(false)
 	const [category, setCategory] = useState('')
 	const [questions, setQuestions] = useState<Question[]>([])
@@ -467,12 +465,12 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 								<ReactPlayer
 									ref={reactPlayerRef}
 									url={desktopQuestionsVideo}
-									playing={desktopPlaying}
+									playing={true}
 									style={{
 										zIndex: 1,
 										borderRadius: '30px',
 									}}
-									playsinline={desktopPlaysinline}
+									playsinline={true}
 									width="100vw"
 									height="90vh"
 									progressInterval={1000}
