@@ -69,6 +69,7 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 				// description: `You have skipped the question: ${questions[currentQuestionIndex].question_text}`,
 				status: 'info',
 				duration: 2000,
+				position: 'top',
 			})
 			if (currentQuestionIndex === questions.length - 1) {
 				getData()
@@ -77,6 +78,7 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 					// description: `You have completed the interview`,
 					status: 'success',
 					duration: 2000,
+					position: 'top',
 				})
 				return
 			}
@@ -86,6 +88,7 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 				title: `Error skipping question ${currentQuestionIndex + 1}`,
 				status: 'error',
 				duration: 2000,
+				position: 'top',
 			})
 		}
 	}
@@ -208,6 +211,8 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 										updateIsListening={updateIsListening}
 										questionId={questions[currentQuestionIndex].question_id}
 										goToNextQuestion={goToNextQuestion}
+										setPlaying={() => {}}
+										setPlaysinline={() => {}}
 									/>
 								)}
 							{showSkipButton && (

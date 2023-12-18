@@ -27,6 +27,7 @@ interface InterviewScreenProps {
 	smashUserId: string
 	botPreference: string
 	setKey: (key: string) => void
+	toggleInterview: (show: boolean) => void
 }
 
 interface Question {
@@ -46,6 +47,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	smashUserId,
 	botPreference,
 	setKey,
+	toggleInterview,
 }) => {
 	//const halfway = new URL('./images/halfway.png', import.meta.url).href;
 	const reactPlayerRef = useRef<ReactPlayer>(null)
@@ -77,6 +79,8 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	const [hasInterviewEnded, setHasInterviewEnded] = useState(false)
 	const [isPositiveResponse, setIsPositiveResponse] = useState(false)
 	const [isSkip, setIsSkip] = useState(false)
+	const [desktopPlaying, setDesktopPlaying] = useState(true)
+	const [desktopPlaysinline, setDesktopPlaysinline] = useState(true)
 	// const [showHalfWay, setShowHalfWay] = useState(false)
 
 	// useEffect(() => {
@@ -140,14 +144,17 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 				// description: `You have skipped the question: ${questions[currentQuestionIndex].question_text}`,
 				status: 'info',
 				duration: 2000,
+				position: 'top',
 			})
 			if (currentQuestionIndex === questions.length - 1) {
-				getData()
+				// getData()
+				toggleInterview(false)
 				toast({
-					title: `Interview completed`,
-					// description: `You have completed the interview`,
+					title: `Congratulations!!🥳🎉`,
+					description: `You have completed the interview`,
 					status: 'success',
 					duration: 2000,
+					position: 'top',
 				})
 				return
 			}
@@ -160,6 +167,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 				title: `Error skipping question ${currentQuestionIndex + 1}`,
 				status: 'error',
 				duration: 2000,
+				position: 'top',
 			})
 		}
 	}
@@ -176,10 +184,20 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 
 	const goToNextQuestion = () => {
 		if (currentQuestionIndex === questions.length - 1) {
-			getData()
+			// getData()
+			toggleInterview(false)
+			toast({
+				title: `Congratulations!!🥳🎉`,
+				description: `You have completed the interview`,
+				status: 'success',
+				duration: 2000,
+				position: 'top',
+			})
 			return
 		}
 		//setCurrentQuestionIndex(currentQuestionIndex + 1)
+		setDesktopPlaying(true)
+		setDesktopPlaysinline(true)
 		setShowReplayButton(false)
 		setShowSkipButton(false)
 		setIsListening(false)
@@ -465,12 +483,12 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 								<ReactPlayer
 									ref={reactPlayerRef}
 									url={desktopQuestionsVideo}
-									playing={true}
+									playing={desktopPlaying}
 									style={{
 										zIndex: 1,
 										borderRadius: '30px',
 									}}
-									playsinline={true}
+									playsinline={desktopPlaysinline}
 									width="100vw"
 									height="90vh"
 									progressInterval={1000}
@@ -514,6 +532,8 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									updateIsListening={updateIsListening}
 									questionId={questions[currentQuestionIndex].question_id}
 									goToNextQuestion={goToNextQuestion}
+									setPlaying={setDesktopPlaying}
+									setPlaysinline={setDesktopPlaysinline}
 								/>
 							)}
 							{showSkipButton && !hasInterviewEnded && (

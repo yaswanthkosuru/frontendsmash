@@ -31,6 +31,7 @@ const Interview = (props: Props) => {
 					status: 'success',
 					duration: 3000,
 					isClosable: true,
+					position: 'top',
 				})
 			} else {
 				toast({
@@ -38,6 +39,7 @@ const Interview = (props: Props) => {
 					status: 'error',
 					duration: 3000,
 					isClosable: true,
+					position: 'top',
 				})
 			}
 		} else {
@@ -46,6 +48,7 @@ const Interview = (props: Props) => {
 				status: 'error',
 				duration: 3000,
 				isClosable: true,
+				position: 'top',
 			})
 		}
 	}
@@ -82,6 +85,7 @@ const Interview = (props: Props) => {
 							smashUserId={smashUserId}
 							botPreference={botPreference}
 							setKey={setKey}
+							toggleInterview={setShowInterview}
 						/>
 					)}
 				</Stack>

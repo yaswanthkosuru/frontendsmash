@@ -16,9 +16,18 @@ interface AudioRecorderProps {
 	updateIsListening: (isListening: boolean) => void
 	questionId: number
 	goToNextQuestion: () => void
+	setPlaying: (isPlaying: boolean) => void
+	setPlaysinline: (playsinline: boolean) => void
 }
 export const AudioRecorder = (props: AudioRecorderProps) => {
-	const { interviewKey, updateIsListening, questionId, goToNextQuestion } = props
+	const {
+		interviewKey,
+		updateIsListening,
+		questionId,
+		goToNextQuestion,
+		setPlaying,
+		setPlaysinline,
+	} = props
 	const toast = useToast()
 	const [recordingStatus, setRecordingStatus] = useState('inactive')
 	const [showSubmitButton, setShowSubmitButton] = useState(false)
@@ -38,6 +47,7 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 	// 	uploadRecording(recordingBlob)
 	// }, [recordingBlob])
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const uploadRecording = async (recordingBlob: BlobPart | any) => {
 		const myUuid = uuidv4()
 		const key = `${myUuid}_${interviewKey}.mp3`
@@ -56,6 +66,7 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 				title: data.message,
 				status: 'success',
 				duration: 3000,
+				position: 'top',
 			})
 			setShowSubmitButton(false)
 			goToNextQuestion()
@@ -64,6 +75,7 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 				title: data.message,
 				status: 'error',
 				duration: 3000,
+				position: 'top',
 			})
 		}
 	}
@@ -74,6 +86,8 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 			startRecording()
 			setRecordingStatus('recording')
 			setShowSubmitButton(false)
+			setPlaying(true)
+			setPlaysinline(true)
 		} catch (error) {
 			console.error('Error accessing audio:', error)
 		}
@@ -85,9 +99,12 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 				'If you are happy with your answer, click the checkmark to submit. Otherwise, click the microphone to re-record.',
 			status: 'info',
 			duration: 3000,
+			position: 'top',
 		})
 		stopRecording()
 		setShowSubmitButton(true)
+		setPlaying(false)
+		setPlaysinline(false)
 		setRecordingStatus('inactive')
 	}
 
