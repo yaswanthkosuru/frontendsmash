@@ -216,7 +216,7 @@ const InterviewScreenTrial: React.FC<InterviewScreenProps> = ({
 									/>
 								)}
 							{showSkipButton && (
-								<SkipButton skipQuestion={skipQuestion} skipLoading={skipLoading} />
+								<SkipButton skipQuestion={skipQuestion} loading={skipLoading} />
 							)}
 						</Stack>
 					</Stack>

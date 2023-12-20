@@ -82,7 +82,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	const [desktopPlaysinline, setDesktopPlaysinline] = useState(true)
 
 	const [skipLoading, setSkipLoading] = useState(false)
-	const [submitLoading, setSubmitLoading] = useState(false)
 	// const [showHalfWay, setShowHalfWay] = useState(false)
 
 	// useEffect(() => {
