@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 // import MicIcon from '@mui/icons-material/Mic'
 import { Button, Stack, Text, Tooltip, useToast } from '@chakra-ui/react'
-import { v4 as uuidv4 } from 'uuid'
-import { useAudioRecorder } from 'react-audio-voice-recorder'
-import { FiMic, FiCheck } from 'react-icons/fi'
 import axios from 'axios'
+import { useAudioRecorder } from 'react-audio-voice-recorder'
+import { FiCheck, FiMic } from 'react-icons/fi'
+import { v4 as uuidv4 } from 'uuid'
 import { API_URL } from '../utils/constants'
 
 // const audioRecorder = new MicRecorder({ bitRate: 16 });
@@ -33,6 +33,7 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 	const [showSubmitButton, setShowSubmitButton] = useState(false)
 	const [, setIsRecordingStarted] = useState(false)
 	const [, setError] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
 		setIsRecordingStarted(false)
@@ -49,6 +50,7 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const uploadRecording = async (recordingBlob: BlobPart | any) => {
+		setLoading(true)
 		const myUuid = uuidv4()
 		const key = `${myUuid}_${interviewKey}.mp3`
 		const file = new File([recordingBlob], key, { type: 'audio/mpeg' })
@@ -61,6 +63,7 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 				'Content-Type': 'multipart/form-data',
 			},
 		})
+		setLoading(false)
 		if (data.success) {
 			toast({
 				title: data.message,
@@ -126,7 +129,9 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 								height: '75px',
 								// color: enabledRecording ? '#ffffff' : 'gray',
 								// borderColor: '#ffffff',
+								boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
 							}}
+							isLoading={loading}
 						>
 							<Text fontSize="1.2rem">
 								<FiMic
@@ -154,7 +159,9 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 							backgroundColor: 'red',
 							// color: enabledRecording ? '#ffffff' : 'gray',
 							// borderColor: '#ffffff',
+							boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
 						}}
+						isLoading={loading}
 					>
 						<Text fontSize={'1.2rem'}>
 							<FiMic
@@ -177,10 +184,13 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 							border: '1px',
 							width: '75px',
 							height: '75px',
+							boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
+
 							// backgroundColor: 'green',
 							// color: enabledRecording ? '#ffffff' : 'gray',
 							// borderColor: '#ffffff',
 						}}
+						isLoading={loading}
 					>
 						<Text fontSize={'1.2rem'}>
 							<FiCheck

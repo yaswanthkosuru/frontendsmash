@@ -7,11 +7,11 @@ import { FiSkipForward } from 'react-icons/fi'
 
 interface SkipButtonProps {
 	skipQuestion: () => void
-	skipLoading: boolean
+	loading: boolean
 }
 
 export const SkipButton = (props: SkipButtonProps) => {
-	const { skipQuestion, skipLoading } = props
+	const { skipQuestion, loading } = props
 	return (
 		<div>
 			<main>
@@ -28,8 +28,9 @@ export const SkipButton = (props: SkipButtonProps) => {
 										height: '75px',
 										// color: '#fff',
 										// borderColor: '#ffffff',
+										boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
 									}}
-									isLoading={skipLoading}
+									isLoading={loading}
 								>
 									{/* <Text fontSize={'1.2rem'}> */}
 									<FiSkipForward
