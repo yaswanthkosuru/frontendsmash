@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react'
-// import MicIcon from '@mui/icons-material/Mic'
 import { Button, Stack, Text, Tooltip, useToast } from '@chakra-ui/react'
 import { v4 as uuidv4 } from 'uuid'
 import { useAudioRecorder } from 'react-audio-voice-recorder'
 import { FiMic, FiCheck } from 'react-icons/fi'
 import axios from 'axios'
 import { API_URL } from '../utils/constants'
-
-// const audioRecorder = new MicRecorder({ bitRate: 16 });
 
 interface AudioRecorderProps {
 	interviewKey: string
@@ -22,21 +18,12 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 	const toast = useToast()
 	const [recordingStatus, setRecordingStatus] = useState('inactive')
 	const [showSubmitButton, setShowSubmitButton] = useState(false)
-	const [, setIsRecordingStarted] = useState(false)
-	const [, setError] = useState(false)
 
 	useEffect(() => {
-		setIsRecordingStarted(false)
-		setError(false)
 		setRecordingStatus('inactive')
 	}, [questionId])
 
 	const { startRecording, stopRecording, recordingBlob, isRecording } = useAudioRecorder()
-
-	// useEffect(() => {
-	// 	if (!recordingBlob) return
-	// 	uploadRecording(recordingBlob)
-	// }, [recordingBlob])
 
 	const uploadRecording = async (recordingBlob: BlobPart | any) => {
 		const myUuid = uuidv4()
@@ -107,8 +94,6 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 								border: '1px',
 								width: '75px',
 								height: '75px',
-								// color: enabledRecording ? '#ffffff' : 'gray',
-								// borderColor: '#ffffff',
 							}}
 						>
 							<Text fontSize="1.2rem">
@@ -135,8 +120,6 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 							width: '75px',
 							height: '75px',
 							backgroundColor: 'red',
-							// color: enabledRecording ? '#ffffff' : 'gray',
-							// borderColor: '#ffffff',
 						}}
 					>
 						<Text fontSize={'1.2rem'}>
@@ -160,9 +143,6 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 							border: '1px',
 							width: '75px',
 							height: '75px',
-							// backgroundColor: 'green',
-							// color: enabledRecording ? '#ffffff' : 'gray',
-							// borderColor: '#ffffff',
 						}}
 					>
 						<Text fontSize={'1.2rem'}>

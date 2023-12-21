@@ -26,7 +26,8 @@ interface InterviewScreenProps {
 	name: string
 	smashUserId: string
 	botPreference: string
-	setKey: (key: string) => void
+	setKey: (key: string) => void,
+  toggleInterview: () => void,
 }
 
 interface Question {
@@ -46,6 +47,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	smashUserId,
 	botPreference,
 	setKey,
+  toggleInterview
 }) => {
 	//const halfway = new URL('./images/halfway.png', import.meta.url).href;
 	const reactPlayerRef = useRef<ReactPlayer>(null)
@@ -261,8 +263,10 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			playedSeconds >= responseTimestamps[currentQuestionIndex].end_time &&
 			currentQuestionIndex <= questionsTimestamps.length
 		) {
-			if (currentQuestionIndex === questionsTimestamps.length) {
+			if (currentQuestionIndex === questionsTimestamps.length - 1) {
+        console.log('inside ')
 				setHasInterviewEnded(true)
+        toggleInterview()
 			} else {
 				setCurrentQuestionIndex((prevIndex) => prevIndex + 1)
 				setIsPositiveResponse(false)
@@ -274,8 +278,9 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			playedSeconds >= skipTimestamps[currentQuestionIndex].end_time &&
 			currentQuestionIndex <= questionsTimestamps.length
 		) {
-			if (currentQuestionIndex === questionsTimestamps.length) {
+			if (currentQuestionIndex === questionsTimestamps.length - 1) {
 				setHasInterviewEnded(true)
+        toggleInterview()
 			} else {
 				console.log('inside is skip')
 				setShowSkipButton(false)
@@ -289,7 +294,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			!isListening &&
 			!isPositiveResponse &&
 			!isSkip &&
-			currentQuestionIndex !== questionsTimestamps.length &&
+			currentQuestionIndex !== questionsTimestamps.length - 1 &&
 			playedSeconds >= questionsTimestamps[currentQuestionIndex].end_time
 		) {
 			setIsRecording(true)
@@ -308,16 +313,17 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			setShowReplayButton(false)
 			setShowSkipButton(false)
 		}
-		// if (
-		//     currentQuestionIndex === questionsTimestamps.length &&
-		//     playedSeconds >= questionsTimestamps?.[currentQuestionIndex].end_time
-		// ) {
-		//     setHasInterviewEnded(true);
-		//     setIsListening(false);
-		//     setIsRecording(false);
-		//     setShowReplayButton(false);
-		//     setShowSkipButton(false);
-		// }
+		if (
+        currentQuestionIndex === questionsTimestamps.length - 1 &&
+        playedSeconds >= questionsTimestamps?.[currentQuestionIndex].end_time
+		) {
+        setHasInterviewEnded(true);
+        setIsListening(false);
+        setIsRecording(false);
+        setShowReplayButton(false);
+        setShowSkipButton(false);
+        toggleInterview();
+		}
 
 		if (isListening && playedSeconds >= listeningTimestamps.end_time) {
 			reactPlayerRef?.current?.seekTo(listeningTimestamps.start_time)
@@ -329,6 +335,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			handlePostQuestionAction()
 		} else {
 			setHasInterviewEnded(true)
+      toggleInterview()
 		}
 	}
 	const replayQuestion = () => {

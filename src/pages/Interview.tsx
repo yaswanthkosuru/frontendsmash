@@ -26,12 +26,13 @@ const Interview = (props: Props) => {
 				interview_key: key,
 			})
 			if (data.success) {
-				toast({
-					title: 'Interview Skipped',
-					status: 'success',
-					duration: 3000,
-					isClosable: true,
-				})
+				console.log('interview skipped')
+				// toast({
+				// 	title: 'Interview Skipped',
+				// 	status: 'success',
+				// 	duration: 3000,
+				// 	isClosable: true,
+				// })
 			} else {
 				toast({
 					title: 'Failed to skip interview',
@@ -82,6 +83,7 @@ const Interview = (props: Props) => {
 							smashUserId={smashUserId}
 							botPreference={botPreference}
 							setKey={setKey}
+							toggleInterview={toggleInterview}
 						/>
 					)}
 				</Stack>
