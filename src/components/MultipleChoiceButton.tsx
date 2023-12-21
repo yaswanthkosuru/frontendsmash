@@ -44,6 +44,7 @@ const MultipleChoiceButton: React.FC<MultipleChoiceButtonProps> = ({
 				// description: `You have skipped the question: ${questions[currentQuestionIndex].question_text}`,
 				status: 'success',
 				duration: 2000,
+				position: 'top',
 			})
 		} else {
 			toast({
@@ -51,6 +52,7 @@ const MultipleChoiceButton: React.FC<MultipleChoiceButtonProps> = ({
 				// description: `You have skipped the question: ${questions[currentQuestionIndex].question_text}`,
 				status: 'error',
 				duration: 2000,
+				position: 'top',
 			})
 		}
 	}

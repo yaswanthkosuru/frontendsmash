@@ -39,6 +39,7 @@ const Interview = (props: Props) => {
 					status: 'error',
 					duration: 3000,
 					isClosable: true,
+					position: 'top',
 				})
 			}
 		} else {
@@ -47,6 +48,7 @@ const Interview = (props: Props) => {
 				status: 'error',
 				duration: 3000,
 				isClosable: true,
+				position: 'top',
 			})
 		}
 	}

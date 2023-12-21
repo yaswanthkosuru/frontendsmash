@@ -1,33 +1,33 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Progress, Spinner, Stack, Text, Tooltip, useToast } from '@chakra-ui/react'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ReplayButton } from './ReplayButton'
 import { SkipButton } from './SkipButton'
 // import halfway from '/images/halfway.png'
 // import MultipleChoiceButton from './MultipleChoiceButton'
 import {
 	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
 	ModalBody,
 	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
 	useDisclosure,
 } from '@chakra-ui/react'
-import { AudioRecorder } from './AudioRecorder'
 import axios from 'axios'
-import { API_URL } from '../utils/constants'
+import { AiFillInfoCircle, AiFillQuestionCircle } from 'react-icons/ai'
 import ReactPlayer from 'react-player'
-import { AiFillQuestionCircle, AiFillInfoCircle } from 'react-icons/ai'
+import { API_URL } from '../utils/constants'
+import { AudioRecorder } from './AudioRecorder'
 
 interface InterviewScreenProps {
 	name: string
 	smashUserId: string
 	botPreference: string
-	setKey: (key: string) => void,
-  toggleInterview: () => void,
+	setKey: (key: string) => void
+	toggleInterview: () => void
 }
 
 interface Question {
@@ -47,7 +47,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	smashUserId,
 	botPreference,
 	setKey,
-  toggleInterview
+	toggleInterview,
 }) => {
 	//const halfway = new URL('./images/halfway.png', import.meta.url).href;
 	const reactPlayerRef = useRef<ReactPlayer>(null)
@@ -65,7 +65,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	const [isRecording, setIsRecording] = useState(false)
 	const [category, setCategory] = useState('')
 	const [questions, setQuestions] = useState<Question[]>([])
-	const [skipLoading, setSkipLoading] = useState(false)
 	const [desktopIntroVideo, setDesktopIntroVideo] = useState('')
 	const [desktopQuestionsVideo, setDesktopQuestionsVideo] = useState('')
 	const [listeningTimestamps, setListeningTimestamps] = useState<Timestamps>({
@@ -79,6 +78,10 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	const [hasInterviewEnded, setHasInterviewEnded] = useState(false)
 	const [isPositiveResponse, setIsPositiveResponse] = useState(false)
 	const [isSkip, setIsSkip] = useState(false)
+	const [desktopPlaying, setDesktopPlaying] = useState(true)
+	const [desktopPlaysinline, setDesktopPlaysinline] = useState(true)
+
+	const [skipLoading, setSkipLoading] = useState(false)
 	// const [showHalfWay, setShowHalfWay] = useState(false)
 
 	// useEffect(() => {
@@ -142,17 +145,8 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 				// description: `You have skipped the question: ${questions[currentQuestionIndex].question_text}`,
 				status: 'info',
 				duration: 2000,
+				position: 'top',
 			})
-			if (currentQuestionIndex === questions.length - 1) {
-				getData()
-				toast({
-					title: `Interview completed`,
-					// description: `You have completed the interview`,
-					status: 'success',
-					duration: 2000,
-				})
-				return
-			}
 			//setCurrentQuestionIndex(currentQuestionIndex + 1)
 			setIsListening(false)
 			setIsRecording(false)
@@ -162,6 +156,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 				title: `Error skipping question ${currentQuestionIndex + 1}`,
 				status: 'error',
 				duration: 2000,
+				position: 'top',
 			})
 		}
 	}
@@ -177,11 +172,9 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	}
 
 	const goToNextQuestion = () => {
-		if (currentQuestionIndex === questions.length - 1) {
-			getData()
-			return
-		}
 		//setCurrentQuestionIndex(currentQuestionIndex + 1)
+		setDesktopPlaying(true)
+		setDesktopPlaysinline(true)
 		setShowReplayButton(false)
 		setShowSkipButton(false)
 		setIsListening(false)
@@ -264,9 +257,9 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			currentQuestionIndex <= questionsTimestamps.length
 		) {
 			if (currentQuestionIndex === questionsTimestamps.length - 1) {
-        console.log('inside ')
+				console.log('inside ')
 				setHasInterviewEnded(true)
-        toggleInterview()
+				toggleInterview()
 			} else {
 				setCurrentQuestionIndex((prevIndex) => prevIndex + 1)
 				setIsPositiveResponse(false)
@@ -280,7 +273,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 		) {
 			if (currentQuestionIndex === questionsTimestamps.length - 1) {
 				setHasInterviewEnded(true)
-        toggleInterview()
+				toggleInterview()
 			} else {
 				console.log('inside is skip')
 				setShowSkipButton(false)
@@ -314,15 +307,22 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			setShowSkipButton(false)
 		}
 		if (
-        currentQuestionIndex === questionsTimestamps.length - 1 &&
-        playedSeconds >= questionsTimestamps?.[currentQuestionIndex].end_time
+			currentQuestionIndex === questionsTimestamps.length - 1 &&
+			playedSeconds >= questionsTimestamps?.[currentQuestionIndex].end_time
 		) {
-        setHasInterviewEnded(true);
-        setIsListening(false);
-        setIsRecording(false);
-        setShowReplayButton(false);
-        setShowSkipButton(false);
-        toggleInterview();
+			toast({
+				title: `Congratulations!!🥳🎉`,
+				description: `You have completed the interview`,
+				status: 'success',
+				duration: 2000,
+				position: 'top',
+			})
+			setHasInterviewEnded(true)
+			setIsListening(false)
+			setIsRecording(false)
+			setShowReplayButton(false)
+			setShowSkipButton(false)
+			toggleInterview()
 		}
 
 		if (isListening && playedSeconds >= listeningTimestamps.end_time) {
@@ -335,7 +335,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			handlePostQuestionAction()
 		} else {
 			setHasInterviewEnded(true)
-      toggleInterview()
+			toggleInterview()
 		}
 	}
 	const replayQuestion = () => {
@@ -379,11 +379,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 					</Modal>
 					<Stack justifyContent={'center'} alignItems={'center'}>
 						{/* {showHalfWay && <Image src={halfway} position={'absolute'} w="80vw" h={'80vh'} />} */}
-						{category.length > 0 && (
-							<Text border={'1px solid #fff'} p={2} borderRadius={'20px'} fontSize={'1.3rem'}>
-								{formatCategory(category)}
-							</Text>
-						)}
+						{category.length > 0 && <Text fontSize={'1.3rem'}>{formatCategory(category)}</Text>}
 						{/* {questions.length > 0 && (
 							<Text fontSize={'1.3rem'}>
 								Q{currentQuestionIndex + 1}: {questions[currentQuestionIndex].question_text}
@@ -398,6 +394,11 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 								onEnded={handleIntroVideoEnded}
 								width="100%"
 								height="90vh"
+								style={{
+									overflow: 'hidden',
+									borderRadius: '30px',
+									boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
+								}}
 								controls
 								url={desktopIntroVideo}
 								pip={false}
@@ -419,10 +420,10 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									value={((currentQuestionIndex + 1) / questions.length) * 100}
 									size={'sm'}
 									h={'10px'}
-									w={'75vw'}
+									w={'73vw'}
 									borderRadius={'20px'}
 									position={'absolute'}
-									bottom={'10px'}
+									bottom={'20px'}
 									colorScheme="facebook"
 									zIndex={2}
 								/>
@@ -436,16 +437,15 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									zIndex={2}
 								>
 									<Tooltip
-										label={questions[currentQuestionIndex].question_text}
+										label={`Question ${currentQuestionIndex + 1} of ${questions.length} - ${
+											questions[currentQuestionIndex].question_text
+										}`}
 										placement="right"
 										hasArrow
 									>
 										<Button
 											colorScheme="facebook"
 											bg={'none'}
-											// position={'absolute'}
-											// top={'12vh'}
-											// right={'12vw'}
 											padding={0}
 											fontSize={'1.5rem'}
 											_hover={{ bg: 'none' }}
@@ -458,9 +458,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 										<Button
 											colorScheme="facebook"
 											bg={'none'}
-											// position={'absolute'}
-											// top={'10vh'}
-											// right={'12vw'}
 											fontSize={'1.5rem'}
 											_hover={{ bg: 'none' }}
 											color={'#000000'}
@@ -472,14 +469,15 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 								<ReactPlayer
 									ref={reactPlayerRef}
 									url={desktopQuestionsVideo}
-									playing={true}
-									style={{
-										zIndex: 1,
-										borderRadius: '30px',
-									}}
-									playsinline={true}
-									width="100vw"
+									playing={desktopPlaying}
+									width="100%"
 									height="90vh"
+									style={{
+										overflow: 'hidden',
+										borderRadius: '30px',
+										boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
+									}}
+									playsinline={desktopPlaysinline}
 									progressInterval={1000}
 									onProgress={handleProgress}
 									onEnded={handleEnded}
@@ -521,10 +519,12 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									updateIsListening={updateIsListening}
 									questionId={questions[currentQuestionIndex].question_id}
 									goToNextQuestion={goToNextQuestion}
+									setPlaying={setDesktopPlaying}
+									setPlaysinline={setDesktopPlaysinline}
 								/>
 							)}
 							{showSkipButton && !hasInterviewEnded && (
-								<SkipButton skipQuestion={skipQuestion} skipLoading={skipLoading} />
+								<SkipButton skipQuestion={skipQuestion} loading={skipLoading} />
 							)}
 						</Stack>
 					</Stack>

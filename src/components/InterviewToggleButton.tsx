@@ -14,7 +14,7 @@ const InterviewToggleButton: React.FC<InterviewToggleButtonProps> = ({
 	onClick,
 	showInterview,
 }) => {
-	const imgUrl = new URL('./images/avatar_gif.gif', import.meta.url).href;
+	const imgUrl = new URL('./images/avatar_gif.gif', import.meta.url).href
 	return (
 		<Tooltip hasArrow label={showInterview ? 'Hide Interview' : 'Show Interview'} placement="left">
 			<Button
@@ -35,6 +35,7 @@ const InterviewToggleButton: React.FC<InterviewToggleButtonProps> = ({
 				onClick={onClick}
 				justifyContent={'center'}
 				alignItems={'center'}
+				boxShadow={'0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'}
 				zIndex={2}
 			>
 				{showInterview ? (

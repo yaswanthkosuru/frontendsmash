@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useState } from 'react'
+// import MicIcon from '@mui/icons-material/Mic'
 import { Button, Stack, Text, Tooltip, useToast } from '@chakra-ui/react'
-import { v4 as uuidv4 } from 'uuid'
-import { useAudioRecorder } from 'react-audio-voice-recorder'
-import { FiMic, FiCheck } from 'react-icons/fi'
 import axios from 'axios'
+import { useAudioRecorder } from 'react-audio-voice-recorder'
+import { FiCheck, FiMic } from 'react-icons/fi'
+import { v4 as uuidv4 } from 'uuid'
 import { API_URL } from '../utils/constants'
 
 interface AudioRecorderProps {
@@ -12,12 +14,24 @@ interface AudioRecorderProps {
 	updateIsListening: (isListening: boolean) => void
 	questionId: number
 	goToNextQuestion: () => void
+	setPlaying: (isPlaying: boolean) => void
+	setPlaysinline: (playsinline: boolean) => void
 }
 export const AudioRecorder = (props: AudioRecorderProps) => {
-	const { interviewKey, updateIsListening, questionId, goToNextQuestion } = props
+	const {
+		interviewKey,
+		updateIsListening,
+		questionId,
+		goToNextQuestion,
+		setPlaying,
+		setPlaysinline,
+	} = props
 	const toast = useToast()
 	const [recordingStatus, setRecordingStatus] = useState('inactive')
 	const [showSubmitButton, setShowSubmitButton] = useState(false)
+	const [, setIsRecordingStarted] = useState(false)
+	const [, setError] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
 		setRecordingStatus('inactive')
@@ -25,7 +39,14 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 
 	const { startRecording, stopRecording, recordingBlob, isRecording } = useAudioRecorder()
 
+	// useEffect(() => {
+	// 	if (!recordingBlob) return
+	// 	uploadRecording(recordingBlob)
+	// }, [recordingBlob])
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const uploadRecording = async (recordingBlob: BlobPart | any) => {
+		setLoading(true)
 		const myUuid = uuidv4()
 		const key = `${myUuid}_${interviewKey}.mp3`
 		const file = new File([recordingBlob], key, { type: 'audio/mpeg' })
@@ -38,11 +59,13 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 				'Content-Type': 'multipart/form-data',
 			},
 		})
+		setLoading(false)
 		if (data.success) {
 			toast({
 				title: data.message,
 				status: 'success',
 				duration: 3000,
+				position: 'top',
 			})
 			setShowSubmitButton(false)
 			goToNextQuestion()
@@ -51,6 +74,7 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 				title: data.message,
 				status: 'error',
 				duration: 3000,
+				position: 'top',
 			})
 		}
 	}
@@ -61,6 +85,8 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 			startRecording()
 			setRecordingStatus('recording')
 			setShowSubmitButton(false)
+			setPlaying(true)
+			setPlaysinline(true)
 		} catch (error) {
 			console.error('Error accessing audio:', error)
 		}
@@ -72,9 +98,12 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 				'If you are happy with your answer, click the checkmark to submit. Otherwise, click the microphone to re-record.',
 			status: 'info',
 			duration: 3000,
+			position: 'top',
 		})
 		stopRecording()
 		setShowSubmitButton(true)
+		setPlaying(false)
+		setPlaysinline(false)
 		setRecordingStatus('inactive')
 	}
 
@@ -94,7 +123,11 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 								border: '1px',
 								width: '75px',
 								height: '75px',
+								// color: enabledRecording ? '#ffffff' : 'gray',
+								// borderColor: '#ffffff',
+								boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
 							}}
+							isLoading={loading}
 						>
 							<Text fontSize="1.2rem">
 								<FiMic
@@ -120,7 +153,11 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 							width: '75px',
 							height: '75px',
 							backgroundColor: 'red',
+							// color: enabledRecording ? '#ffffff' : 'gray',
+							// borderColor: '#ffffff',
+							boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
 						}}
+						isLoading={loading}
 					>
 						<Text fontSize={'1.2rem'}>
 							<FiMic
@@ -143,7 +180,13 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 							border: '1px',
 							width: '75px',
 							height: '75px',
+							boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
+
+							// backgroundColor: 'green',
+							// color: enabledRecording ? '#ffffff' : 'gray',
+							// borderColor: '#ffffff',
 						}}
+						isLoading={loading}
 					>
 						<Text fontSize={'1.2rem'}>
 							<FiCheck
