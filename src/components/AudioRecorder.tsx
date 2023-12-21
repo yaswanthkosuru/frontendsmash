@@ -29,8 +29,6 @@ export const AudioRecorder = (props: AudioRecorderProps) => {
 	const toast = useToast()
 	const [recordingStatus, setRecordingStatus] = useState('inactive')
 	const [showSubmitButton, setShowSubmitButton] = useState(false)
-	const [, setIsRecordingStarted] = useState(false)
-	const [, setError] = useState(false)
 	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
