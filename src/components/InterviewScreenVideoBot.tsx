@@ -131,7 +131,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 
 	const skipQuestion = async () => {
 		setSkipLoading(true)
-		setIsSkip(true)
 		setShowReplayButton(false)
 		setShowSkipButton(false)
 		const { data } = await axios.post(`${API_URL}/user/answer/skip`, {
@@ -150,6 +149,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			//setCurrentQuestionIndex(currentQuestionIndex + 1)
 			setIsListening(false)
 			setIsRecording(false)
+			setIsSkip(true)
 			setSkipResponse()
 		} else {
 			toast({
