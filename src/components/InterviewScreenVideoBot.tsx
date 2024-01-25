@@ -4,8 +4,6 @@ import { Button, Progress, Spinner, Stack, Text, Tooltip, useToast } from '@chak
 import React, { useEffect, useRef, useState } from 'react'
 import { ReplayButton } from './ReplayButton'
 import { SkipButton } from './SkipButton'
-// import halfway from '/images/halfway.png'
-// import MultipleChoiceButton from './MultipleChoiceButton'
 import {
 	Modal,
 	ModalBody,
@@ -49,7 +47,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	setKey,
 	toggleInterview,
 }) => {
-	//const halfway = new URL('./images/halfway.png', import.meta.url).href;
 	const reactPlayerRef = useRef<ReactPlayer>(null)
 	const introVideoRef = useRef(null)
 	const toast = useToast()
@@ -82,17 +79,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	const [desktopPlaysinline, setDesktopPlaysinline] = useState(true)
 
 	const [skipLoading, setSkipLoading] = useState(false)
-	// const [showHalfWay, setShowHalfWay] = useState(false)
-
-	// useEffect(() => {
-	// 	if (showHalfWay) {
-	// 		setTimeout(() => {
-	// 			setShowHalfWay(false)
-	// 			setDesktopPlaying(true)
-	// 			setDesktopPlaysinline(true)
-	// 		}, 3000)
-	// 	}
-	// }, [showHalfWay])
 
 	useEffect(() => {
 		if (isListening) {
@@ -106,18 +92,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 		if (reactPlayerRef && reactPlayerRef.current) {
 			reactPlayerRef.current.seekTo(questionsTimestamps[currentQuestionIndex].start_time)
 			setIsRecording(false)
-			// reactPlayerRef.current.playing = true;
-			// reactPlayerRef.current.playsinline = true;
-			// reactPlayerRef.current.pip = false;
 		}
-		// if (currentQuestionIndex === questionTimestamps.length - 1) {
-		//     updateInterviewEnded();
-		// }
-		// if (currentQuestionIndex === 1) {
-		// 	setDesktopPlaying(false)
-		// 	setDesktopPlaysinline(false)
-		// 	setShowHalfWay(true)
-		// }
 	}, [currentQuestionIndex])
 
 	const formatCategory = (category: string) => {
@@ -141,12 +116,10 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 		if (data.success) {
 			toast({
 				title: `Question ${currentQuestionIndex + 1} skipped`,
-				// description: `You have skipped the question: ${questions[currentQuestionIndex].question_text}`,
 				status: 'info',
 				duration: 2000,
 				position: 'top',
 			})
-			//setCurrentQuestionIndex(currentQuestionIndex + 1)
 			setIsListening(false)
 			setIsRecording(false)
 			setIsSkip(true)
@@ -172,7 +145,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	}
 
 	const goToNextQuestion = () => {
-		//setCurrentQuestionIndex(currentQuestionIndex + 1)
 		setDesktopPlaying(true)
 		setDesktopPlaysinline(true)
 		setShowReplayButton(false)
@@ -209,15 +181,14 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 			smash_user_id: smashUserId,
 			bot_preference: botPreference,
 		})
-		console.log('data', data)
+		const questionsByCategory = data?.data?.questionsByCategory
 		if (data.success) {
-			setQuestions(data?.data?.questions)
+			setQuestions(questionsByCategory?.questions)
 			setInterviewKey(data?.data?.interview_key)
 			setKey(data?.data?.interview_key)
-			setCategory(data?.data?.category)
+			setCategory(questionsByCategory?.category)
 			setCurrentQuestionIndex(0)
 			setListeningTimestamps(data?.data?.listening_timestamps)
-			console.log('listening timestamps', data?.data?.listening_timestamps)
 			setQuestionsTimestamps(data?.data?.questions_timestamps)
 			setResponseTimestamps(data?.data?.response_timestamps)
 			setSkipTimestamps(data?.data?.skip_timestamps)
@@ -378,13 +349,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 						</ModalContent>
 					</Modal>
 					<Stack justifyContent={'center'} alignItems={'center'}>
-						{/* {showHalfWay && <Image src={halfway} position={'absolute'} w="80vw" h={'80vh'} />} */}
 						{category.length > 0 && <Text fontSize={'1.3rem'}>{formatCategory(category)}</Text>}
-						{/* {questions.length > 0 && (
-							<Text fontSize={'1.3rem'}>
-								Q{currentQuestionIndex + 1}: {questions[currentQuestionIndex].question_text}
-							</Text>
-						)} */}
 
 						{!loading && !!desktopIntroVideo && !hasIntroVideoEnded && (
 							<ReactPlayer
@@ -431,7 +396,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									direction={'column'}
 									position={'absolute'}
 									top={'10vh'}
-									left={'12vw'}
+									left={'4vw'}
 									spacing={0}
 									gap={0}
 									zIndex={2}
@@ -442,6 +407,8 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 										}`}
 										placement="right"
 										hasArrow
+										defaultIsOpen
+										isOpen={true}
 									>
 										<Button
 											colorScheme="facebook"
@@ -503,15 +470,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 							{showReplayButton && !hasInterviewEnded && (
 								<ReplayButton replayQuestion={replayQuestion} />
 							)}
-							{/* {questions.length > 0 &&
-								questions[currentQuestionIndex].question_type === 'multiple-choice' && (
-									<MultipleChoiceButton
-										options={questions[currentQuestionIndex].question_options}
-										interviewKey={interviewKey}
-										questionId={questions[currentQuestionIndex].question_id}
-										goToNextQuestion={goToNextQuestion}
-									/>
-								)} */}
 							{questions.length > 0 && isRecording && !hasInterviewEnded && (
 								<AudioRecorder
 									interviewKey={interviewKey}
