@@ -180,10 +180,15 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 		})
 		const questionsByCategory = data?.data?.questionsByCategory
 		if (data.success) {
-			setQuestions(questionsByCategory?.questions)
+			if (questionsByCategory) {
+				setQuestions(questionsByCategory?.questions)
+				setCategory(questionsByCategory?.category)
+			} else {
+				setQuestions(data?.data?.questions)
+				setCategory(data?.data?.category)
+			}
 			setInterviewKey(data?.data?.interview_key)
 			setKey(data?.data?.interview_key)
-			setCategory(questionsByCategory?.category)
 			setCurrentQuestionIndex(0)
 			setListeningTimestamps(data?.data?.listening_timestamps)
 			setQuestionsTimestamps(data?.data?.questions_timestamps)
@@ -322,6 +327,8 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 		}
 	}, [interviewKey])
 
+	console.log('inside data', questions)
+
 	return (
 		<>
 			{loading && <Spinner size={'xl'} />}
@@ -346,7 +353,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 						</ModalContent>
 					</Modal>
 					<Stack justifyContent={'center'} alignItems={'center'}>
-						{category.length > 0 && <Text fontSize={'1.3rem'}>{formatCategory(category)}</Text>}
+						{category && <Text fontSize={'1.3rem'}>{formatCategory(category)}</Text>}
 
 						{!loading && !!desktopIntroVideo && !hasIntroVideoEnded && (
 							<ReactPlayer
@@ -376,10 +383,10 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 								}}
 							/>
 						)}
-						{!loading && hasIntroVideoEnded && (
+						{!loading && hasIntroVideoEnded && questions && questions.length > 0 && (
 							<Stack justifyContent={'center'} alignItems={'center'}>
 								<Progress
-									value={((currentQuestionIndex + 1) / questions.length) * 100}
+									value={((currentQuestionIndex + 1) / questions?.length) * 100}
 									size={'sm'}
 									h={'10px'}
 									w={'73vw'}
@@ -399,7 +406,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 									zIndex={2}
 								>
 									<Tooltip
-										label={`Question ${currentQuestionIndex + 1} of ${questions.length} - ${
+										label={`Question ${currentQuestionIndex + 1} of ${questions?.length} - ${
 											questions[currentQuestionIndex].question_text
 										}`}
 										placement="right"
@@ -467,7 +474,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 							{showReplayButton && !hasInterviewEnded && (
 								<ReplayButton replayQuestion={replayQuestion} />
 							)}
-							{questions.length > 0 && isRecording && !hasInterviewEnded && (
+							{questions?.length > 0 && isRecording && !hasInterviewEnded && (
 								<AudioRecorder
 									interviewKey={interviewKey}
 									handleAnswer={() => {}}
