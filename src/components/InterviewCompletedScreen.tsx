@@ -1,7 +1,7 @@
 import { Image, VStack } from '@chakra-ui/react'
 
 const InterviewCompletedScreen = () => {
-	const imgUrl = new URL('/images/interview_end.png', import.meta.url).href
+	const imgUrl = new URL('./images/interview_end.png', import.meta.url).href
 
 	return (
 		<>
