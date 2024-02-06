@@ -1,30 +1,29 @@
-# React + TypeScript + Vite
+# SmashBot (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To Start project on local, follow these steps -
+1. Ensure that node and npm are installed on your machine
+2. Clone project directory
+3. cd into the project directory
+4. run `npm install`
+5. run `npm run dev`
 
-Currently, two official plugins are available:
+The above steps will start the project and will point to the production server.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To point to the local backend server, 
+1. go to `src/utils/constants.ts`
+2. Comment this line - export const API_URL: string = 'https://smashbotbackendnew.azurewebsites.net'
+3. Uncomment this line - export const API_URL: string = 'http://localhost:3001'
 
-## Expanding the ESLint configuration
+# To Install @smashorg/ai-bot as a dependency
+1. `npm install @smashorg/ai-bot@<latest-version>`
+You can find the latest version in package.json
+2. In your react component, do the following
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```import { Interview } from "@smashorg/ai-bot";
+  <Interview
+    smashUserId={id.toString()}
+  />
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+`smashUserId` is the unique identifier for the user in the smash database. Please send it in the string format.
+
