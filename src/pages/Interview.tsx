@@ -119,7 +119,11 @@ const Interview = (props: Props) => {
 								<Text fontSize={'1.3rem'}>Smash Dashboard</Text>
 							)}
 							<ToggleTheme />
-							<InterviewToggleButton onClick={toggleInterview} showInterview={showBotAvatar} />
+							<InterviewToggleButton
+								botPreference={botPreference}
+								onClick={toggleInterview}
+								showInterview={showBotAvatar}
+							/>
 							{showInterview && (
 								<InterviewScreenVideoBot
 									smashUserId={smashUserId}

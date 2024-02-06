@@ -8,13 +8,18 @@ import { FiX } from 'react-icons/fi'
 interface InterviewToggleButtonProps {
 	onClick: () => void
 	showInterview: boolean
+	botPreference: string
 }
 
 const InterviewToggleButton: React.FC<InterviewToggleButtonProps> = ({
 	onClick,
 	showInterview,
+	botPreference,
 }) => {
-	const imgUrl = new URL('./images/avatar_gif.gif', import.meta.url).href
+	const imgUrl =
+		!botPreference || botPreference === 'male'
+			? new URL('./images/avatar_gif.gif', import.meta.url).href
+			: new URL('./images/female_avatar.gif', import.meta.url).href
 	return (
 		<Tooltip hasArrow label={showInterview ? 'Hide Interview' : 'Show Interview'} placement="left">
 			<Button
