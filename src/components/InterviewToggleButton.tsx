@@ -42,7 +42,7 @@ const InterviewToggleButton: React.FC<InterviewToggleButtonProps> = ({
 					// <Image h={'80px'} src={<FiX />} borderRadius={'50%'} />
 					<FiX size={'60px'} />
 				) : (
-					<Image h={'80px'} src={'./images/avatar_gif.gif'} borderRadius={'50%'} />
+					<Image h={'80px'} src={'/images/avatar_gif.gif'} borderRadius={'50%'} />
 				)}
 			</Button>
 		</Tooltip>

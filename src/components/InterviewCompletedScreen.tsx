@@ -7,7 +7,7 @@ const InterviewCompletedScreen = () => {
 		<>
 			<VStack spacing={2} p={4} justifyContent={'center'} alignItems={'center'} h={'100vh'}>
 				<Image
-					src={'./images/interview_end.png'}
+					src={'/images/interview_end.png'}
 					h={'90vh'}
 					style={{
 						borderRadius: '30px',
