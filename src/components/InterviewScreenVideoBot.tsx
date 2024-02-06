@@ -21,7 +21,6 @@ import { API_URL } from '../utils/constants'
 import { AudioRecorder } from './AudioRecorder'
 
 interface InterviewScreenProps {
-	name: string
 	smashUserId: string
 	botPreference: string
 	setKey: (key: string) => void
@@ -41,7 +40,6 @@ interface Timestamps {
 }
 
 const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
-	name,
 	smashUserId,
 	botPreference,
 	setKey,
@@ -177,7 +175,6 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 	const getData = async () => {
 		setLoading(true)
 		const { data } = await axios.post(`${API_URL}/user/login`, {
-			name,
 			smash_user_id: smashUserId,
 			bot_preference: botPreference,
 		})

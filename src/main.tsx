@@ -6,6 +6,6 @@ import Interview from './pages/Interview.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<ChakraProvider>
 		{/* <Interview name="test-with-fixes" smashUserId={'0fb20906-cb60-440b-8bce-03019cacc7f1'} /> */}
-		<Interview name="test-with-fixes" smashUserId={uuidv4()} />
+		<Interview smashUserId={uuidv4()} />
 	</ChakraProvider>,
 )

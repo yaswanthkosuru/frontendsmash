@@ -12,12 +12,11 @@ import { API_URL } from '../utils/constants'
 // import MultipleChoiceButton from '../components/MultipleChoiceButton'
 
 interface Props {
-	name: string
 	smashUserId: string
 }
 
 const Interview = (props: Props) => {
-	const { name, smashUserId } = props
+	const { smashUserId } = props
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [showInterviewEndScreen, setShowInterviewEndScreen] = useState(false)
 	const [botPreference, setBotPreference] = useState('male')
@@ -123,7 +122,6 @@ const Interview = (props: Props) => {
 							<InterviewToggleButton onClick={toggleInterview} showInterview={showBotAvatar} />
 							{showInterview && (
 								<InterviewScreenVideoBot
-									name={name}
 									smashUserId={smashUserId}
 									botPreference={botPreference}
 									setKey={setKey}
