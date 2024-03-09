@@ -118,6 +118,7 @@ const InterviewScreenVideoBot: React.FC<InterviewScreenProps> = ({
 				duration: 2000,
 				position: 'top',
 			})
+
 			setIsListening(false)
 			setIsRecording(false)
 			setIsSkip(true)
